@@ -139,7 +139,7 @@ var rootCmd = &cobra.Command{
 		m, err := tea.NewProgram(model{
 			duration:  duration,
 			timer:     timer.NewWithInterval(duration, interval),
-			progress:  progress.New(progress.WithGradient("#595959", "#595959")),
+			progress:  progress.New(progress.WithGradient("#1c1c1c", "#1c1c1c")),
 			name:      name,
 			altscreen: altscreen,
 			showpercentage: showpercentage,
