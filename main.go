@@ -19,6 +19,7 @@ import (
 type model struct {
 	name         string
 	altscreen    bool
+	showpercentage bool
 	duration     time.Duration
 	passed       time.Duration
 	timer        timer.Model
@@ -36,6 +37,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case timer.TickMsg:
 		var cmds []tea.Cmd
 		var cmd tea.Cmd
+
+		if m.showpercentage {
+			m.progress.ShowPercentage = false
+		}
 
 		m.passed += m.timer.Interval
 		pct := m.passed.Milliseconds() * 100 / m.duration.Milliseconds()
@@ -97,6 +102,7 @@ func (m model) View() string {
 var (
 	name                string
 	altscreen           bool
+	showpercentage      bool
 	winHeight, winWidth int
 	version             = "dev"
 	quitKeys            = key.NewBinding(key.WithKeys("esc", "q"))
@@ -133,9 +139,10 @@ var rootCmd = &cobra.Command{
 		m, err := tea.NewProgram(model{
 			duration:  duration,
 			timer:     timer.NewWithInterval(duration, interval),
-			progress:  progress.New(progress.WithDefaultGradient()),
+			progress:  progress.New(progress.WithGradient("#595959", "#595959")),
 			name:      name,
 			altscreen: altscreen,
+			showpercentage: showpercentage,
 		}, opts...).Run()
 		if err != nil {
 			return err
@@ -169,8 +176,8 @@ var manCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&name, "name", "n", "", "timer name")
 	rootCmd.Flags().BoolVarP(&altscreen, "fullscreen", "f", false, "fullscreen")
+	rootCmd.Flags().BoolVarP(&showpercentage, "noshowperc", "n", false, "dont ShowPercentage")
 
 	rootCmd.AddCommand(manCmd)
 }
