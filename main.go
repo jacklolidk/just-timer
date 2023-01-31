@@ -38,7 +38,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		var cmds []tea.Cmd
 		var cmd tea.Cmd
 
-		if m.showpercentage {
+		if !m.showpercentage {
 			m.progress.ShowPercentage = false
 		}
 
