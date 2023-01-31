@@ -177,7 +177,7 @@ var manCmd = &cobra.Command{
 
 func init() {
 	rootCmd.Flags().BoolVarP(&altscreen, "fullscreen", "f", false, "fullscreen")
-	rootCmd.Flags().BoolVarP(&showpercentage, "noshowperc", "n", false, "dont ShowPercentage")
+	rootCmd.Flags().BoolVarP(&showpercentage, "showperc", "s", false, "Show Percentage")
 
 	rootCmd.AddCommand(manCmd)
 }
